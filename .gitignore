@@ -1,0 +1,38 @@
+# Ignore point-in-time artifacts
+# the time sensitive, externally reproducable slice, the transient
+# component of a "report". The date it was pulled is appended to the filename.
+# or its prefixed with t underscore
+
+t_*
+*_202?????.*
+
+
+# ignore excel files - keep from ballooning the repo
+*.xls
+*.xlsx
+*.xlsm
+*.xlsb
+
+# Ignore emacs temp files ('~' or '#' in the filename)
+*#*
+*~*
+
+# Ignore the manually coded subqueries made for test purposes
+*-manual.*
+
+# Ignore DB files.  These sql queries are designed to produce the DB from scratch each time its run
+*.db
+*.dat
+
+
+
+# Ignore the metadata that comes out with pdflatex
+
+*.log
+*.out
+*.aux
+
+
+# Ignore files with sensitive configuration data
+mortar.el
+sqlite-helper-lisp.el
