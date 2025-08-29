@@ -52,7 +52,7 @@ drop view if exists CheckCalc1;
 
 CREATE TABLE if not exists MRPimport (_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16);
 
-.import "s:/CC Concurrence Workspace/HARRISDM/RM06analyst/SAPdata/Charfixdata/SAPspool_20250828/charfix-FP10000016189.TXT" MRPimport
+.import "s:/CC Concurrence Workspace/HARRISDM/RM06analyst/SAPdata/Charfixdata/SAPspool_20250829/charfix-FP10000022833.TXT" MRPimport
 
 -- ===Prepare====================================================================
 
@@ -68,7 +68,7 @@ Eltext,
 MRPinclude0,  -- setting to match SAP's default availability calculation
 MRPinclude1,  -- On Hand, firm process orders, forecast requirements, firm incoming purchases, not-yet-placed purchase reqs (everything but the safety stock)
 MRPinclude2,  -- On Hand, firm process orders, forecast requirements, firm incoming purchases
-MRPinclude3,  -- On Hand, firm process orders, firm incoming purchase
+MRPinclude3,  -- On Hand, firm process orders, forecast requirements
 MRPinclude4  -- On Hand, firm process orders
 );
 
@@ -78,17 +78,17 @@ insert into StockEl values
  ('WB', 'Plant stock',1,1,1,1,1),
  ('LB', 'Storage location stock',0,0,0,0,0),
  ('BR', 'Process order',1,1,1,1,1),
- ('AR', 'Dependent reservation',1,1,1,0,0),
+ ('AR', 'Dependent reservation',1,1,1,1,1),
  ('PA', 'Planned order',1,1,1,0,0),
- ('SB', 'Dependent requirement',1,1,1,0,0),
+ ('SB', 'Dependent requirement',1,1,1,1,0),
  ('QM', 'Inspection lot for quality management',1,1,1,1,1),
  ('KB', 'Individual customer stock',1,1,1,1,1),
  ('VC', 'Order',1,1,1,1,1),
  ('VJ', 'Delivery',1,1,1,1,1),
  ('VP', 'Planning',1,1,1,1,1),
- ('PP', 'Planned independent requirement',1,1,1,0,0),
+ ('PP', 'Planned independent requirement',1,1,1,1,0),
  ('BA', 'Purchase requisition',1,1,0,0,0),
- ('BE', 'Order item schedule line',1,1,1,1,0),
+ ('BE', 'Order item schedule line',1,1,1,0,0),
  ('FH', 'End of planning time fence',0,0,0,0,0),
  ('SH', 'Safety stock',1,0,0,0,0),
  ('DD', 'Effective-out date',0,0,0,0,0),
@@ -409,8 +409,8 @@ cancel_flag,
 
 ifnull(RunOut0,(select * from furthestdate)) as safety_stock,
 ifnull(RunOut1,(select * from furthestdate)) as purchase_req,
-ifnull(RunOut2,(select * from furthestdate)) as forcast_demand,
-ifnull(RunOut3,(select * from furthestdate)) as incoming_PO,
+ifnull(RunOut2,(select * from furthestdate)) as incoming_PO,
+ifnull(RunOut3,(select * from furthestdate)) as forcast_demand,
 ifnull(RunOut4,(select * from furthestdate)) as scheduled_production
 
 from
